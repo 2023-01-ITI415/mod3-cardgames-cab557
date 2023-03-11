@@ -23,7 +23,7 @@ public class CardSpritesSO : ScriptableObject
     public Sprite[] rankSprites;
 
     private static CardSpritesSO S;
-    private static Dictionary<char, Sprite> SUITS { get; private set; }
+    private static Dictionary<char, Sprite> SUITS { get; set; }
 
     public void Init()
     {
@@ -43,10 +43,10 @@ public class CardSpritesSO : ScriptableObject
         S = cSSO;
         SUITS = new Dictionary<char, Sprite>()
         {
-            {"C", S.suitClub },
-            {"D", S.suitDiamond },
-            {"H", S.suitHeart },
-            {"S", S.suitSpade }
+            {'C', S.suitClub },
+            {'D', S.suitDiamond },
+            {'H', S.suitHeart },
+            {'S', S.suitSpade }
         };
     }
 
