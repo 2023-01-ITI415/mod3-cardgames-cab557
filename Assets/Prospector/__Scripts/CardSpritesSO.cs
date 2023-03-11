@@ -27,7 +27,7 @@ public class CardSpritesSO : ScriptableObject
 
     public void Init()
     {
-        INIT_STATISTICS(this);
+        INIT_STATICS(this);
     }
     /// <summary>
     /// Initializes the static elements of CardSpriteSO
