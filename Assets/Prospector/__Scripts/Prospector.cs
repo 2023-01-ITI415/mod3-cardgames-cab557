@@ -20,6 +20,9 @@ public class Prospector : MonoBehaviour {
     private Deck deck;
     private JsonLayout jsonLayout;
 
+     // A Dictionary to pair mine layout IDs and actual Cards
+     private Dictionary<int, CardProspector> mineIdToCardDict;
+
     void Start()
     {
         // Set the private Singleton. We’ll use this later.
@@ -35,6 +38,11 @@ public class Prospector : MonoBehaviour {
 
         drawPile = ConvertCardsToCardProspectors(deck.cards);
         LayoutMine();
+        // Set up the initial target card
+ MoveToTarget(Draw());
+
+         // Set up the draw pile
+ UpdateDrawPile();
     }
 
     /// <summary>
@@ -64,12 +72,48 @@ public class Prospector : MonoBehaviour {
  CardProspector cp = drawPile[0]; // Pull the 0th CardProspector
  drawPile.RemoveAt(0);            // Then remove it from drawPile
          return (cp);                      // And return it
-     }
- 
-     /// <summary>
-     /// Positions the initial tableau of cards, a.k.a. the 'mine'
+    }
+  /// <summary>
+     /// Handler for any time a card in the game is clicked
      /// </summary>
-     void LayoutMine()
+     /// <param name='cp'>The CardProspector that was clicked</param>
+     static public void CARD_CLICKED(CardProspector cp)
+    {
+         // The reaction is determined by the state of the clicked card
+         switch (cp.state)
+       {
+         case eCardState.target:
+             // Clicking the target card does nothing
+             break;
+         case eCardState.drawpile:
+             // Clicking *any* card in the drawPile will draw the next card
+             // Call two methods on the Prospector Singleton S
+ S.MoveToTarget(S.Draw());  // Draw a new target card
+ S.UpdateDrawPile();          // Restack the drawPile
+             break;
+         case eCardState.mine:
+              // Clicking a card in the mine will check if it’s a valid play
+ bool validMatch = true;  // Initially assume that it’s valid 
+
+             // If the card is face-down, it’s not valid
+             if (!cp.faceUp) validMatch = false;
+
+             // If it’s not an adjacent rank, it’s not valid
+             if (!cp.AdjacentTo(S.target)) validMatch = false;            // b
+
+             if (validMatch)
+               {        // If it’s a valid card
+ S.mine.Remove(cp);   // Remove it from the tableau List
+ S.MoveToTarget(cp);  // Make it the target card
+                    S.SetMineFaceUps();
+                }
+                break;
+         }
+     }
+/// <summary>
+/// Positions the initial tableau of cards, a.k.a. the 'mine'
+/// </summary>
+void LayoutMine()
     {
          // Create an empty GameObject to serve as an anchor for the tableau   // a
          if (layoutAnchor == null)
@@ -79,10 +123,13 @@ public class Prospector : MonoBehaviour {
  layoutAnchor = tGO.transform;             // Grab its Transform
          }
 
- CardProspector cp;                                                    // b
+ CardProspector cp;
 
-         // Iterate through the JsonLayoutSlots pulled from the JSON_Layout
-         foreach (JsonLayoutSlot slot in jsonLayout.slots)
+        // Generate the Dictionary to match mine layout ID to CardProspector
+ mineIdToCardDict = new Dictionary<int, CardProspector>();
+
+        // Iterate through the JsonLayoutSlots pulled from the JSON_Layout
+        foreach (JsonLayoutSlot slot in jsonLayout.slots)
        {
  cp = Draw(); // Pull a card from the top (beginning) of the draw Pile
  cp.faceUp = slot.faceUp;    // Set its faceUp to the value in SlotDef
@@ -102,8 +149,109 @@ jsonLayout.multiplier.x * slot.x,
  cp.layoutSlot = slot;
              // CardProspectors in the mine have the state CardState.mine
  cp.state = eCardState.mine;
+            // Set the sorting layer of all SpriteRenderers on the Card
+ cp.SetSpriteSortingLayer(slot.layer);
 
- mine.Add(cp); // Add this CardProspector to the List<> mine
+            mine.Add(cp); // Add this CardProspector to the List<> mine
+
+            // Add this CardProspector to the mineIDtoCardDict Dictionary
+ mineIdToCardDict.Add(slot.id, cp);
+        }
+    }
+    /// <summary>
+     /// Moves the current target card to the discardPile
+     /// </summary>
+     /// <param name='cp'>The CardProspector to be moved</param>
+     void MoveToDiscard(CardProspector cp)
+   {
+         // Set the state of the card to discard
+ cp.state = eCardState.discard;
+ discardPile.Add(cp);  // Add it to the discardPile List<>
+ cp.transform.SetParent(layoutAnchor); // Update its transform parent
+
+         // Position it on the discardPile
+ cp.SetLocalPos(new Vector3(
+ jsonLayout.multiplier.x * jsonLayout.discardPile.x,
+ jsonLayout.multiplier.y * jsonLayout.discardPile.y,
+ 0));
+
+ cp.faceUp = true;
+
+         // Place it on top of the pile for depth sorting
+ cp.SetSpriteSortingLayer(jsonLayout.discardPile.layer);               // a
+ cp.SetSortingOrder(-200 + (discardPile.Count * 3));                  // b
+     }
+ 
+     /// <summary>
+     /// Make cp the new target card
+     /// </summary>
+     /// <param name='cp'>The CardProspector to be moved</param>
+     void MoveToTarget(CardProspector cp)
+   {
+         // If there is currently a target card, move it to discardPile
+         if (target != null) MoveToDiscard(target);
+
+         // Use MoveToDiscard to move the target card to the correct location
+ MoveToDiscard(cp);                                                    // c
+
+         // Then set a few additional things to make cp the new target
+ target = cp; // cp is the new target
+ cp.state = eCardState.target;
+
+         // Set the depth sorting so that cp is on top of the discardPile
+ cp.SetSpriteSortingLayer("Target");                                 // c
+ cp.SetSortingOrder(0);
+     }
+ 
+     /// <summary>
+     /// Arranges all the cards of the drawPile to show how many are left
+     /// </summary>
+     void UpdateDrawPile()
+   {
+ CardProspector cp;
+         // Go through all the cards of the drawPile
+         for (int i = 0; i < drawPile.Count; i++)
+       {
+ cp = drawPile[i];
+ cp.transform.SetParent(layoutAnchor);
+
+             // Position it correctly with the layout.drawPile.stagger
+ Vector3 cpPos = new Vector3();
+ cpPos.x = jsonLayout.multiplier.x * jsonLayout.drawPile.x;
+             // Add the staggering for the drawPile
+ cpPos.x += jsonLayout.drawPile.xStagger * i;
+ cpPos.y = jsonLayout.multiplier.y * jsonLayout.drawPile.y;
+ cpPos.z = 0.1f * i;
+ cp.SetLocalPos(cpPos);
+
+ cp.faceUp = false; // DrawPile Cards are all face-down
+ cp.state = eCardState.drawpile;
+             // Set depth sorting
+ cp.SetSpriteSortingLayer(jsonLayout.drawPile.layer);
+ cp.SetSortingOrder(-10 * i);
+         }
+    }
+    /// <summary>
+     /// This turns cards in the Mine face-up and face-down
+     /// </summary>
+     public void SetMineFaceUps()
+   {                                            // d
+ CardProspector coverCP;
+         foreach (CardProspector cp in mine)
+       {
+ bool faceUp = true; // Assume the card will be face-up
+
+             // Iterate through the covering cards by mine layout ID
+             foreach (int coverID in cp.layoutSlot.hiddenBy)
+           {
+ coverCP = mineIdToCardDict[coverID];
+                 // If the covering card is null or still in the mine...
+                 if (coverCP == null || coverCP.state == eCardState.mine)
+              {
+ faceUp = false; // then this card is face-down
+                 }
+             }
+ cp.faceUp = faceUp; // Set the value on the card
          }
      }
 }

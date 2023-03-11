@@ -31,7 +31,8 @@ public class Card : MonoBehaviour
         suit = eSuit;
         rank = eRank;
         // If this is a Diamond or Heart, change the default Black color to Red
-        if (suit == 'D' || suit == 'H') {
+        if (suit == 'D' || suit == 'H')
+        {
             colS = "Red";
             color = Color.red;
         }
@@ -183,5 +184,90 @@ public class Card : MonoBehaviour
         _tSRend.sortingOrder = 2;                                            // b
         _tGO.name = "back";
         back = _tGO;
+    }
+    private SpriteRenderer[] spriteRenderers;
+
+    /// <summary>
+    /// Gather all SpriteRenderers on this and its children into an array.
+    /// </summary>
+    void PopulateSpriteRenderers()
+    {
+        // If we’ve already populated spriteRenderers, just return.            // a
+        if (spriteRenderers != null) return;
+        // GetComponentsInChildren is slow, but we’re only doing it once per card
+        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+    }
+
+    /// <summary>
+    /// Moves the Sprites of this Card into a specified sorting layer
+    /// </summary>
+    /// <param name='layerName'>The name of the layer to move to</param>
+    public void SetSpriteSortingLayer(string layerName)
+    {
+        PopulateSpriteRenderers();
+
+        foreach (SpriteRenderer srend in spriteRenderers)
+        {
+            srend.sortingLayerName = layerName;
+        }
+    }
+
+    /// <summary>
+    /// Sets the sortingOrder of the Sprites on this Card. This allows multiple
+    /// Cards to be in the same sorting layer and still overlap properly, and
+    /// it is used by both the draw and discard piles.
+    /// </summary>
+    /// <param name='sOrd'>The sortingOrder for the face of the Card</param>
+    public void SetSortingOrder(int sOrd)
+    {                                    // b
+        PopulateSpriteRenderers();
+
+        foreach (SpriteRenderer srend in spriteRenderers)
+        {
+            if (srend.gameObject == this.gameObject)
+            {
+                // If the gameObject is this.gameObject, it’s the card face
+                srend.sortingOrder = sOrd;  // Set its order to sOrd
+            }
+            else if (srend.gameObject.name == "back")
+            {
+                // If it’s the back, set it to the highest layer
+                srend.sortingOrder = sOrd + 2;
+            }
+            else
+            {
+                // If it’s anything else, put it in between.
+                srend.sortingOrder = sOrd + 1;
+            }
+        }
+    }
+    // Virtual methods can be overridden by subclass methods with the same name
+    virtual public void OnMouseUpAsButton()
+    {
+        print(name);  // When clicked, this outputs the card name
+    }
+    /// <summary>
+    /// Return true if the two cards are adjacent in rank.
+    /// If wrap is true, Ace and King are adjacent.
+    /// </summary>
+    /// <param name='otherCard'>The card to compare to</param>
+    /// <param name='wrap'>If true (default) Ace and King wrap</param>
+    /// <returns>true, if the cards are adjacent</returns>
+    public bool AdjacentTo(Card otherCard, bool wrap = true)
+    {
+        // If either card is face-down, it’s not a valid match.
+        if (!faceUp || !otherCard.faceUp) return (false);
+
+        // If the ranks are 1 apart, they are adjacent
+        if (Mathf.Abs(rank - otherCard.rank) == 1) return (true);
+
+        if (wrap)
+        {  // If wrap == true, Ace and King are treated as adjacent
+           // If one Card is Ace and the other King, they are adjacent
+            if (rank == 1 && otherCard.rank == 13) return (true);
+            if (rank == 13 && otherCard.rank == 1) return (true);
+        }
+
+        return (false);  // Otherwise, return false
     }
 }
