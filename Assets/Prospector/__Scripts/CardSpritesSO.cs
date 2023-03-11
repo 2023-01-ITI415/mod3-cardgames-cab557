@@ -23,7 +23,7 @@ public class CardSpritesSO : ScriptableObject
     public Sprite[] rankSprites;
 
     private static CardSpritesSO S;
-    private static Dictionary<char, Sprite> SUITS { get; set; }
+    public static Dictionary<char, Sprite> SUITS { get; private set; }
 
     public void Init()
     {

@@ -39,7 +39,11 @@ public class Card : MonoBehaviour
         def = JsonParseDeck.GET_CARD_DEF(rank);
 
         // Build the card from Sprites                                        // a
-
+        AddDecorators();
+        AddPips();
+        AddFace();
+        AddBack();                                                           // a
+        faceUp = startFaceUp;
     }
 
     /// <summary>
@@ -49,5 +53,135 @@ public class Card : MonoBehaviour
     public virtual void SetLocalPos(Vector3 v)
     {                              // b
         transform.localPosition = v;
+    }
+    // These private variables that will be reused several times                    // c
+    private Sprite _tSprite = null;
+    private GameObject _tGO = null;
+    private SpriteRenderer _tSRend = null;
+    // An Euler rotation of 180° around the Z-axis will flip sprites upside down
+    private Quaternion _flipRot = Quaternion.Euler(0, 0, 180);                  // d
+
+    /// <summary>
+    /// Adds the decorators to the top-left and bottom-right of each card.
+    ///  Decorators are the suit and rank in the corners of each card.
+    /// </summary>
+    private void AddDecorators()
+    {
+        // Add Decorators
+        foreach (JsonPip pip in JsonParseDeck.DECORATORS)
+        {                         // e
+            if (pip.type == "suit")
+            {
+                // Instantiate a Sprite GameObject
+                _tGO = Instantiate<GameObject>(Deck.SPRITE_PREFAB, transform);       // f
+                                                                                     // Get the SpriteRenderer Component
+                _tSRend = _tGO.GetComponent<SpriteRenderer>();
+                // Get the suit Sprite from the CardSpritesSO.SUIT static field
+                _tSRend.sprite = CardSpritesSO.SUITS[suit];
+            }
+            else
+            {
+                _tGO = Instantiate<GameObject>(Deck.SPRITE_PREFAB, transform);       // f
+                _tSRend = _tGO.GetComponent<SpriteRenderer>();
+                // Get the rank Sprite from the CardSpritesSO.RANK static field
+                _tSRend.sprite = CardSpritesSO.RANKS[rank];
+                // Set the color of the rank to match the suit
+                _tSRend.color = color;
+            }
+
+            // Make the Decorator Sprites render above the Card
+            _tSRend.sortingOrder = 1;                                               // g
+                                                                                    // Set the localPosition based on the location from DeckXML
+            _tGO.transform.localPosition = pip.loc;
+            // Flip the decorator if needed
+            if (pip.flip) _tGO.transform.rotation = _flipRot;                       // h
+                                                                                    // Set the scale to keep decorators from being too big
+            if (pip.scale != 1)
+            {
+                _tGO.transform.localScale = Vector3.one * pip.scale;
+            }
+            // Name this GameObject so it’s easy to find in the Hierarchy
+            _tGO.name = pip.type;
+            // Add this decorator GameObject to the List card.decoGOs
+            decoGOs.Add(_tGO);
+        }
+    }
+    /// <summary>
+    /// Adds pips to the front of all cards from A to 10
+    /// </summary>
+    private void AddPips()
+    {
+        int pipNum = 0;
+        // For each of the pips in the definition...
+        foreach (JsonPip pip in def.pips)
+        {                                   // b
+                                            // Instantiate a GameObject from the Deck.SPRITE_PREFAB static field
+            _tGO = Instantiate<GameObject>(Deck.SPRITE_PREFAB, transform);
+            // Set the position to that specified in the XML
+            _tGO.transform.localPosition = pip.loc;
+            // Flip it if necessary
+            if (pip.flip) _tGO.transform.rotation = _flipRot;
+            // Scale it if necessary (only for the Ace)
+            if (pip.scale != 1)
+            {
+                _tGO.transform.localScale = Vector3.one * pip.scale;
+            }
+            // Give this GameObject a name
+            _tGO.name = "pip_" + pipNum++;                                      // c
+                                                                                // Get the SpriteRenderer Component
+            _tSRend = _tGO.GetComponent<SpriteRenderer>();
+            // Set the Sprite to the proper suit
+            _tSRend.sprite = CardSpritesSO.SUITS[suit];
+            // sortingOrder=1 renders this pip above the Card_Front
+            _tSRend.sortingOrder = 1;
+            // Add this to the Card’s list of pips
+            pipGOs.Add(_tGO);
+        }
+    }
+    /// <summary>
+    /// Adds the face sprite for card ranks 11 to 13
+    /// </summary>
+    private void AddFace()
+    {
+        if (def.face == "")
+            return;// No need to run if this isn’t a face card
+
+        // Find a face sprite in CardSpritesSO with the right name
+        string faceName = def.face + suit;                                   // b
+        _tSprite = CardSpritesSO.GET_FACE(faceName);                       // c
+        if (_tSprite == null)
+        {
+            Debug.LogError("Face sprite " + faceName + " not found.");
+            return;
+        }
+        _tGO = Instantiate<GameObject>(Deck.SPRITE_PREFAB, transform);     // d
+        _tSRend = _tGO.GetComponent<SpriteRenderer>();
+        _tSRend.sprite = _tSprite;// Assign the face Sprite to _tSRend
+        _tSRend.sortingOrder = 1;// Set the sortingOrder
+        _tGO.transform.localPosition = Vector3.zero;
+        _tGO.name = faceName;
+    }
+    /// <summary>
+    /// Property to show and hide the back of the card.
+    /// </summary>
+    public bool faceUp
+    {
+        get { return (!back.activeSelf); }                                   // a
+        set { back.SetActive(!value); }
+    }
+
+    /// <summary>
+    /// Adds a back to the card so that renders on top of everything else
+    /// </summary>
+    private void AddBack()
+    {
+        _tGO = Instantiate<GameObject>(Deck.SPRITE_PREFAB, transform);
+        _tSRend = _tGO.GetComponent<SpriteRenderer>();
+        _tSRend.sprite = CardSpritesSO.BACK;
+        _tGO.transform.localPosition = Vector3.zero;
+        // 2 is a higher sortingOrder than anything else
+        _tSRend.sortingOrder = 2;                                            // b
+        _tGO.name = "back";
+        back = _tGO;
     }
 }
