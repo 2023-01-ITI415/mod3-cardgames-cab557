@@ -90,7 +90,8 @@ public class Prospector : MonoBehaviour {
              // Call two methods on the Prospector Singleton S
  S.MoveToTarget(S.Draw());  // Draw a new target card
  S.UpdateDrawPile();          // Restack the drawPile
-             break;
+                ScoreManager.TALLY(eScoreEvent.draw);
+                break;
          case eCardState.mine:
               // Clicking a card in the mine will check if it’s a valid play
  bool validMatch = true;  // Initially assume that it’s valid 
@@ -106,10 +107,13 @@ public class Prospector : MonoBehaviour {
  S.mine.Remove(cp);   // Remove it from the tableau List
  S.MoveToTarget(cp);  // Make it the target card
                     S.SetMineFaceUps();
+                    ScoreManager.TALLY(eScoreEvent.mine); // c
                 }
                 break;
          }
-     }
+        S.CheckForGameOver(); // This is now the last line of CARD_CLICKED()  // c
+    }
+
 /// <summary>
 /// Positions the initial tableau of cards, a.k.a. the 'mine'
 /// </summary>
@@ -253,5 +257,60 @@ jsonLayout.multiplier.x * slot.x,
              }
  cp.faceUp = faceUp; // Set the value on the card
          }
+    }
+     /// <summary>
+     /// Test whether the game is over
+     /// </summary>
+     void CheckForGameOver()
+   {                                                 // a
+         // If the mine is empty, the game is over
+         if (mine.Count == 0)
+       {
+ GameOver(true);  // Call GameOver() with a win
+             return;
+         }
+
+         // If there are still cards in the mine & draw pile, the game’s not over
+         if (drawPile.Count > 0) return;
+
+         // Check for remaining valid plays
+         foreach (CardProspector cp in mine)
+       {
+             // If there is a valid play, the game’s not over
+             if (target.AdjacentTo(cp)) return;
+         }
+
+         // Since there are no valid plays, the game is over
+ GameOver(false);  // Call GameOver with a loss
      }
+
+
+     /// <summary>
+     /// Called when the game is over. Simple for now, but expandable
+     /// </summary>
+     /// <param name='won'>true if the player won</param>
+     void GameOver(bool won)
+   {
+         if (won)
+       {
+            //Debug.Log("Game Over. You won! :)");
+            ScoreManager.TALLY(eScoreEvent.gameWin);
+        }
+        else
+        {
+            //Debug.Log("Game Over. You Lost. :");
+            ScoreManager.TALLY(eScoreEvent.gameLoss);
+        }
+
+         // Reset the CardSpritesSO singleton to null
+ CardSpritesSO.RESET();                                                // b
+         // Reload the scene, resetting the game
+         // Note that there are TWO underscores at the beginning of '__Prospector…
+ SceneManager.LoadScene("__Prospector_Scene_0");
+     }
+ 
+ 
+     
+ 
+         
 }
