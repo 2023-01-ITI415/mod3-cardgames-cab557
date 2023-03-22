@@ -15,7 +15,9 @@ public class Prospector : MonoBehaviour {
     [Header("Dynamic")]
     public List<CardProspector> drawPile;
     public List<CardProspector> discardPile;
-     public List<CardProspector> mine; 
+     public List<CardProspector> mine;
+    public List<CardProspector> potentialSpecialCards;
+    public List<float> silverCardChances;
      public CardProspector target;
  
      private Transform layoutAnchor;
@@ -41,6 +43,7 @@ public class Prospector : MonoBehaviour {
 
         drawPile = ConvertCardsToCardProspectors(deck.cards);
         LayoutMine();
+
         // Set up the initial target card
  MoveToTarget(Draw());
 
@@ -74,7 +77,8 @@ public class Prospector : MonoBehaviour {
    {
  CardProspector cp = drawPile[0]; // Pull the 0th CardProspector
  drawPile.RemoveAt(0);            // Then remove it from drawPile
-         return (cp);                      // And return it
+         return (cp);
+        // And return it
     }
   /// <summary>
      /// Handler for any time a card in the game is clicked
@@ -113,6 +117,7 @@ public class Prospector : MonoBehaviour {
                     ScoreManager.TALLY(eScoreEvent.mine); // c
                 }
                 break;
+
          }
         S.CheckForGameOver(); // This is now the last line of CARD_CLICKED()  // c
     }
@@ -163,6 +168,9 @@ jsonLayout.multiplier.x * slot.x,
 
             // Add this CardProspector to the mineIDtoCardDict Dictionary
  mineIdToCardDict.Add(slot.id, cp);
+            potentialSpecialCards.Add(cp);
+
+
         }
     }
     /// <summary>
@@ -319,9 +327,23 @@ jsonLayout.multiplier.x * slot.x,
  SceneManager.LoadScene("__Prospector_Scene_0");
      }
     }
- 
- 
-     
- 
-         
+
+    private List<CardProspector> GetPotentialSpecialCards()
+    {
+        return potentialSpecialCards;
+    }
+
+    void  ConvertToSilver(List<CardProspector> silverCardChances)
+    {
+        float value = Random.value;
+        if value <= 0  {
+            eCardType.silver;
+        }
+        potentialSpecialCards.Draw
+    }
+
+
+
+
+
 }

@@ -534,6 +534,13 @@ MonoBehaviour:
   drawPile: []
   discardPile: []
   mine: []
+  potentialSpecialCards: []
+  silverCardChances:
+  - 1
+  - 1
+  - 0.5
+  - 0.25
+  - 0.25
   target: {fileID: 0}
 --- !u!114 &827460518
 MonoBehaviour:
