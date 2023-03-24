@@ -17,7 +17,8 @@ public class Deck : MonoBehaviour
     public List<Card> cards;
 
     private JsonParseDeck jsonDeck;
-
+    public GameObject prefabCardGold;
+    public GameObject prefabCardSilver;
     static public GameObject SPRITE_PREFAB { get; private set; }
 
     /*void Start()
@@ -71,7 +72,9 @@ public class Deck : MonoBehaviour
                 c.transform.position =
                 new Vector3((j - 7) * 3, (i - 1.5f) * 4, 0);
             }
+
         }
+
     }
 
     /// <summary>
@@ -83,18 +86,42 @@ public class Deck : MonoBehaviour
     /// <returns></returns>
     Card MakeCard(char suit, int rank)
     {
-        GameObject go = Instantiate<GameObject>(prefabCard, deckAnchor);   // f
 
+        GameObject go = Instantiate<GameObject>(prefabCard, deckAnchor); // f
         Card card = go.GetComponent<Card>();
 
-        card.Init(suit, rank, startFaceUp);                                // g
+        if (Random.value <= .20f && Random.value > .5f)
+        {
+            GameObject go = Instantiate<GameObject>(prefabCardSilver, deckAnchor); // f
+           
+
+            card.Init(suit, rank, startFaceUp);
+            return card;
+        }
+        // Adds Gold Card 
+        else if (Random.value <= .5f)
+        {
+            GameObject go = Instantiate<GameObject>(prefabCardGold, deckAnchor); // f
+            Card card = go.GetComponent<Card>();
+
+            card.Init(suit, rank, startFaceUp);
+            return card;
+        }
+        else
+        {
+            //Normal
+            GameObject go = Instantiate<GameObject>(prefabCard, deckAnchor); // f
+            Card card = go.GetComponent<Card>();
+        }
+
+        Card  card.Init(suit, rank, startFaceUp);                                // g
         return card;
     }
-     /// <summary>
-     /// Shuffle a List(Card) and return the result to the original list.      // b
-     /// </summary>
-     /// <param name='refCards'>As a ref, this alters on the original list</param>
-     static public void Shuffle(ref List<Card> refCards)
+        /// <summary>
+        /// Shuffle a List(Card) and return the result to the original list.      // b
+        /// </summary>
+        /// <param name='refCards'>As a ref, this alters on the original list</param>
+        static public void Shuffle(ref List<Card> refCards)
     {                     // a
          // Create a temporary List to hold the new shuffle order
  List < Card > tCards = new List<Card>();

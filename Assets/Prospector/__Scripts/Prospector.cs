@@ -28,6 +28,12 @@ public class Prospector : MonoBehaviour {
      // A Dictionary to pair mine layout IDs and actual Cards
      private Dictionary<int, CardProspector> mineIdToCardDict;
 
+    public Sprite goldBack;
+    public Sprite goldFront;
+
+    public Sprite silverBack;
+    public Sprite silverFront;
+
     void Start()
     {
         // Set the private Singleton. We’ll use this later.
@@ -328,19 +334,8 @@ jsonLayout.multiplier.x * slot.x,
      }
     }
 
-    private List<CardProspector> GetPotentialSpecialCards()
-    {
-        return potentialSpecialCards;
-    }
 
-    void  ConvertToSilver(List<CardProspector> silverCardChances)
-    {
-        float value = Random.value;
-        if value <= 0  {
-            eCardType.silver;
-        }
-        potentialSpecialCards.Draw
-    }
+   
 
 
 

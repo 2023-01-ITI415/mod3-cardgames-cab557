@@ -11,6 +11,8 @@ public class CardSpritesSO : ScriptableObject
     public Sprite cardBackGold;
     public Sprite cardFront;
     public Sprite cardFrontGold;
+    public Sprite cardBackSilver;
+    public Sprite cardFrontSilver;
 
     [Header("Suits")]
     public Sprite suitClub;
@@ -76,5 +78,27 @@ public class CardSpritesSO : ScriptableObject
     public static void RESET()
     {
         S = null;
+    }
+    public static Sprite BACKGOLD
+    {
+        
+        get { return S.cardBackGold; }
+    }
+
+    public static Sprite BACKSILVER
+    {
+       
+        get { return S.cardBackSilver; }
+    }
+    public static Sprite FRONTGOLD
+    {
+        
+        get { return S.cardFrontGold; }
+    }
+
+    public static Sprite FRONTSILVER
+    {
+       
+        get { return S.cardFrontSilver; }
     }
 }

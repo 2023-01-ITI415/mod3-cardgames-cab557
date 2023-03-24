@@ -178,6 +178,20 @@ public class Card : MonoBehaviour
     {
         _tGO = Instantiate<GameObject>(Deck.SPRITE_PREFAB, transform);
         _tSRend = _tGO.GetComponent<SpriteRenderer>();
+        if (Random.value <= .20f && Random.value > .5f)
+        {
+            _tSRend.sprite = CardSpritesSO.BACKSILVER;
+        }
+      
+        else if (Random.value <= .5f)
+        {
+            _tSRend.sprite = CardSpritesSO.BACKGOLD;
+        }
+        else
+        { 
+            _tSRend.sprite = CardSpritesSO.BACK;
+        }
+
         _tSRend.sprite = CardSpritesSO.BACK;
         _tGO.transform.localPosition = Vector3.zero;
         // 2 is a higher sortingOrder than anything else
@@ -270,4 +284,5 @@ public class Card : MonoBehaviour
 
         return (false);  // Otherwise, return false
     }
+
 }
