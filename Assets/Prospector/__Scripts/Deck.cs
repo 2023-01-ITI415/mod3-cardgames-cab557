@@ -17,8 +17,7 @@ public class Deck : MonoBehaviour
     public List<Card> cards;
 
     private JsonParseDeck jsonDeck;
-    public GameObject prefabCardGold;
-    public GameObject prefabCardSilver;
+
     static public GameObject SPRITE_PREFAB { get; private set; }
 
     /*void Start()
@@ -27,11 +26,11 @@ public class Deck : MonoBehaviour
         Shuffle(ref cards);
     }
  */
-     /// <summary>
-     /// The Prospector class will call InitDeck to set up the deck and build
-     ///  all 52 card GameObjects from the jsonDeck and cardSprites information.
-     /// </summary>
-     public void InitDeck()
+    /// <summary>
+    /// The Prospector class will call InitDeck to set up the deck and build
+    ///  all 52 card GameObjects from the jsonDeck and cardSprites information.
+    /// </summary>
+    public void InitDeck()
     {
         // Create a static reference to spritePrefab for the Card class to use
         SPRITE_PREFAB = prefabSprite;
@@ -41,8 +40,8 @@ public class Deck : MonoBehaviour
         // Get a reference to the JsonParseDeck component
         jsonDeck = GetComponent<JsonParseDeck>();                            // b
 
-         // Create an anchor for all the Card GameObjects in the Hierarchy
-         if (GameObject.Find("_Deck") == null)
+        // Create an anchor for all the Card GameObjects in the Hierarchy
+        if (GameObject.Find("_Deck") == null)
         {                          // c
             GameObject anchorGO = new GameObject("_Deck");
             deckAnchor = anchorGO.transform;
@@ -50,11 +49,11 @@ public class Deck : MonoBehaviour
 
         MakeCards();
     }
- 
-     /// <summary>
-     /// Create a GameObject for each card in the deck.
-     /// </summary>
-     void MakeCards()
+
+    /// <summary>
+    /// Create a GameObject for each card in the deck.
+    /// </summary>
+    void MakeCards()
     {
         cards = new List<Card>();
         Card c;
@@ -72,9 +71,7 @@ public class Deck : MonoBehaviour
                 c.transform.position =
                 new Vector3((j - 7) * 3, (i - 1.5f) * 4, 0);
             }
-
         }
-
     }
 
     /// <summary>
@@ -86,59 +83,35 @@ public class Deck : MonoBehaviour
     /// <returns></returns>
     Card MakeCard(char suit, int rank)
     {
+        GameObject go = Instantiate<GameObject>(prefabCard, deckAnchor);   // f
 
-        GameObject go = Instantiate<GameObject>(prefabCard, deckAnchor); // f
         Card card = go.GetComponent<Card>();
 
-        if (Random.value <= .20f && Random.value > .5f)
-        {
-            GameObject go = Instantiate<GameObject>(prefabCardSilver, deckAnchor); // f
-           
-
-            card.Init(suit, rank, startFaceUp);
-            return card;
-        }
-        // Adds Gold Card 
-        else if (Random.value <= .5f)
-        {
-            GameObject go = Instantiate<GameObject>(prefabCardGold, deckAnchor); // f
-            Card card = go.GetComponent<Card>();
-
-            card.Init(suit, rank, startFaceUp);
-            return card;
-        }
-        else
-        {
-            //Normal
-            GameObject go = Instantiate<GameObject>(prefabCard, deckAnchor); // f
-            Card card = go.GetComponent<Card>();
-        }
-
-        Card  card.Init(suit, rank, startFaceUp);                                // g
+        card.Init(suit, rank, startFaceUp);                                // g
         return card;
     }
-        /// <summary>
-        /// Shuffle a List(Card) and return the result to the original list.      // b
-        /// </summary>
-        /// <param name='refCards'>As a ref, this alters on the original list</param>
-        static public void Shuffle(ref List<Card> refCards)
+    /// <summary>
+    /// Shuffle a List(Card) and return the result to the original list.      // b
+    /// </summary>
+    /// <param name='refCards'>As a ref, this alters on the original list</param>
+    static public void Shuffle(ref List<Card> refCards)
     {                     // a
-         // Create a temporary List to hold the new shuffle order
- List < Card > tCards = new List<Card>();
+                          // Create a temporary List to hold the new shuffle order
+        List<Card> tCards = new List<Card>();
 
- int ndx; // This will hold the index of the card to be moved
-         // Repeat as long as there are cards in the original List
-         while (refCards.Count > 0)
-       {
-             // Pick the index of a random card
- ndx = Random.Range(0, refCards.Count);
-             // Add that card to the temporary List
- tCards.Add(refCards[ndx]);
-             // And remove that card from the original List
- refCards.RemoveAt(ndx);
-         }
-         // Replace the original List with the temporary List
- refCards = tCards;                                                    // c
-     }
+        int ndx; // This will hold the index of the card to be moved
+                 // Repeat as long as there are cards in the original List
+        while (refCards.Count > 0)
+        {
+            // Pick the index of a random card
+            ndx = Random.Range(0, refCards.Count);
+            // Add that card to the temporary List
+            tCards.Add(refCards[ndx]);
+            // And remove that card from the original List
+            refCards.RemoveAt(ndx);
+        }
+        // Replace the original List with the temporary List
+        refCards = tCards;                                                    // c
+    }
 
 }
