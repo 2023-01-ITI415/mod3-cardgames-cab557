@@ -32,6 +32,9 @@ public class Prospector : MonoBehaviour
     public Sprite silverBack;
     public Sprite silverFront;
 
+    public List<CardProspector> potentialSpecialCards;
+    public float[] silverCardChances = { 1, 1, 0.5f, 0.25f, 0.125f };
+
     void Start()
     {
         // Set the private Singleton. We’ll use this later.
@@ -47,7 +50,7 @@ public class Prospector : MonoBehaviour
 
         drawPile = ConvertCardsToCardProspectors(deck.cards);
         LayoutMine();
-        // MakeSilverCards()
+        ConvertToSilver();
         //   MakeGoldCards()
         // Set up the initial target card
         MoveToTarget(Draw());
@@ -171,6 +174,8 @@ public class Prospector : MonoBehaviour
 
             // Add this CardProspector to the mineIDtoCardDict Dictionary
             mineIdToCardDict.Add(slot.id, cp);
+            potentialSpecialCards.Add(cp);
+            
         }
     }
     /// <summary>
@@ -326,6 +331,19 @@ public class Prospector : MonoBehaviour
             // Reload the scene, resetting the game
             SceneManager.LoadScene("__Prospector_Scene_0");
         }
+
+       
+
+    }
+    void ConvertToSilver()
+    {
+       foreach (float chance in silverCardChances) {
+
+            if (Random.value <= chance)
+            {
+                Debug.Log("Making Silver for Game" + chance);
+            }
+       }
     }
 
 
