@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4724606200961420168}
   - component: {fileID: 2619300711911234198}
   - component: {fileID: 86479738317905539}
+  - component: {fileID: 2720474140624894377}
   m_Layer: 0
   m_Name: PrefabCard
   m_TagString: Untagged
@@ -145,3 +146,26 @@ MonoBehaviour:
     faceUp: 0
     layer: 
     hiddenByString: 
+--- !u!114 &2720474140624894377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874845187188271477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 679bfc284f7669945adbfd35ff027d33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  suit: 0
+  rank: 0
+  color: {r: 0, g: 0, b: 0, a: 1}
+  colS: Black
+  back: {fileID: 0}
+  def:
+    rank: 0
+    face: 
+    pips: []
+  decoGOs: []
+  pipGOs: []
