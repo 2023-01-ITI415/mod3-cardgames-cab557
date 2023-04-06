@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;   // We’ll need this line later in the chapter
+using Poker;
 
 namespace Poker
 {
@@ -149,7 +150,7 @@ namespace Poker
             mineIdToCardDict = new Dictionary<int, CardProspector>();
 
             // Iterate through the JsonLayoutSlots pulled from the JSON_Layout
-            foreach (JsonLayoutSlot slot in jsonLayout.slots)
+            foreach (Poker.JsonLayoutSlot slot in jsonLayout.slots)
             {
                 cp = Draw(); // Pull a card from the top (beginning) of the draw Pile
                 cp.faceUp = slot.faceUp;    // Set its faceUp to the value in SlotDef

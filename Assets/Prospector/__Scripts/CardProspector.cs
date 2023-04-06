@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Poker;
 
 // This enum defines the variable type eCardState with four named values.      // a
 public enum eCardState { drawpile, mine, target, discard }
