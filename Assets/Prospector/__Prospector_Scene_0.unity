@@ -534,14 +534,18 @@ MonoBehaviour:
   drawPile: []
   discardPile: []
   mine: []
+  target: {fileID: 0}
+  goldBack: {fileID: 21300000, guid: 8ecf4828943064b3a96f6258b54c0f11, type: 3}
+  goldFront: {fileID: 21300000, guid: 944dc539459fe4109b973bd4c97f68ee, type: 3}
+  silverBack: {fileID: 21300000, guid: 8382909428efc40dfb1c978ce3041414, type: 3}
+  silverFront: {fileID: 21300000, guid: 64b6be280e77b4ac3944f7fce873368c, type: 3}
   potentialSpecialCards: []
   silverCardChances:
   - 1
   - 1
   - 0.5
   - 0.25
-  - 0.25
-  target: {fileID: 0}
+  - 0.125
 --- !u!114 &827460518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -581,7 +585,7 @@ MonoBehaviour:
   gameOverText: {fileID: 421073120}
   roundResultText: {fileID: 1226640664}
   highScoreText: {fileID: 911513459}
-  _resultsUIFieldsVisible: 0
+  _resultsUIFieldsVisible: 1
 --- !u!1 &911513457
 GameObject:
   m_ObjectHideFlags: 0
