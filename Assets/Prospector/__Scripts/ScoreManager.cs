@@ -9,7 +9,9 @@ using UnityEngine;
      draw,
      mine,
      gameWin,
-     gameLoss
+     gameLoss,
+     mineSilver,
+     mineGold,
  }
 
 // ScoreManager handles all of the scoring
