@@ -9,7 +9,7 @@ namespace Poker
     {
         [Header("Inscribed")]
         public CardSpritesSO cardSprites;
-        public GameObject prefabCard1;
+        public GameObject prefabCard;
         public GameObject prefabSprite;
         public bool startFaceUp = true;
 
@@ -84,7 +84,7 @@ namespace Poker
         /// <returns></returns>
         Card1 MakeCard(char suit, int rank)
         {
-            GameObject go = Instantiate<GameObject>(prefabCard1, deckAnchor);   // f
+            GameObject go = Instantiate<GameObject>(prefabCard, deckAnchor);   // f
 
             Card1 card = go.GetComponent<Card1>();
 
