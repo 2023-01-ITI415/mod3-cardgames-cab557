@@ -1215,3 +1215,19 @@ Received Import Request.
   path: Assets/OtherGame/GameScene.unity
   artifactKey: Guid(8a69785a7c7394d1286e8e0987d1c268) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Start importing Assets/OtherGame/GameScene.unity using Guid(8a69785a7c7394d1286e8e0987d1c268) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '91d94c34979b26927cc5fb61468442c1') in 0.002171 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 291.667807 seconds.
+  path: Assets/Prospector/__Scripts/Prospector.cs
+  artifactKey: Guid(0e84a95330b6fed4e975d952ea58dd00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prospector/__Scripts/Prospector.cs using Guid(0e84a95330b6fed4e975d952ea58dd00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4660571f5ab8c5b37373401f8bbb9312') in 0.002540 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 214.123568 seconds.
+  path: Assets/Prospector/__Scripts/Prospector.cs
+  artifactKey: Guid(0e84a95330b6fed4e975d952ea58dd00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prospector/__Scripts/Prospector.cs using Guid(0e84a95330b6fed4e975d952ea58dd00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4e6d58c4330e248fb1504349a300ba8c') in 0.002317 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.006435 seconds.
