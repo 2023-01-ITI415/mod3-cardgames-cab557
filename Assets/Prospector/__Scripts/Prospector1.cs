@@ -153,7 +153,7 @@ namespace Poker
             foreach (Poker.JsonLayoutSlot slot in jsonLayout.slots)
             {
                 cp = Draw(); // Pull a card from the top (beginning) of the draw Pile
-                cp.faceUp = slot.faceUp;    // Set its faceUp to the value in SlotDef
+               // cp.faceUp = slot.faceUp;    // Set its faceUp to the value in SlotDef
                                             // Make the CardProspector1 a child of layoutAnchor
                 cp.transform.SetParent(layoutAnchor);
 
