@@ -256,7 +256,7 @@ namespace Poker
         /// <param name='otherCard'>The card to compare to</param>
         /// <param name='wrap'>If true (default) Ace and King wrap</param>
         /// <returns>true, if the cards are adjacent</returns>
-        public bool AdjacentTo(Card otherCard, bool wrap = true)
+        public bool AdjacentTo(Card1 otherCard, bool wrap = true)
         {
             // If either card is face-down, it’s not a valid match.
             if (!faceUp || !otherCard.faceUp) return (false);

@@ -17,10 +17,10 @@ namespace Poker
         public float roundDelay = 2f;  // 2 sec delay between rounds
 
         [Header("Dynamic")]
-        public List<CardProspector> drawPile;
-        public List<CardProspector> discardPile;
-        public List<CardProspector> mine;
-        public CardProspector target;
+        public List<CardProspector1> drawPile;
+        public List<CardProspector1> discardPile;
+        public List<CardProspector1> mine;
+        public CardProspector1 target;
 
         private Transform layoutAnchor;
 
@@ -28,14 +28,14 @@ namespace Poker
         private JsonLayout jsonLayout;
 
         // A Dictionary to pair mine layout IDs and actual Cards
-        private Dictionary<int, CardProspector> mineIdToCardDict;
+        private Dictionary<int, CardProspector1> mineIdToCardDict;
         public Sprite goldBack;
         public Sprite goldFront;
 
         public Sprite silverBack;
         public Sprite silverFront;
 
-        public List<CardProspector> potentialSpecialCards;
+        public List<CardProspector1> potentialSpecialCards;
         public float[] silverCardChances = { 1, 1, 0.5f, 0.25f, 0.125f };
 
         void Start()
@@ -68,13 +68,13 @@ namespace Poker
         /// </summary>
         /// <param name='listCard'>A List(Card) to be converted</param>
         /// <returns>A List(CardProspector) of the converted cards</returns>
-        List<CardProspector> ConvertCardsToCardProspectors(List<Card> listCard)
+        List<CardProspector1> ConvertCardsToCardProspectors(List<Card1> listCard)
         {
-            List<CardProspector> listCP = new List<CardProspector>();
-            CardProspector cp;
-            foreach (Card card in listCard)
+            List<CardProspector1> listCP = new List<CardProspector1>();
+            CardProspector1 cp;
+            foreach (Card1 card in listCard)
             {
-                cp = card as CardProspector;                                      // c
+                cp = card as CardProspector1;                                      // c
                 listCP.Add(cp);
             }
             return (listCP);
@@ -84,9 +84,9 @@ namespace Poker
         /// Note: There is no protection against trying to draw from an empty pile!
         /// </summary>
         /// <returns>The top card of drawPile</returns>
-        CardProspector Draw()
+        CardProspector1 Draw()
         {
-            CardProspector cp = drawPile[0]; // Pull the 0th CardProspector
+            CardProspector1 cp = drawPile[0]; // Pull the 0th CardProspector
             drawPile.RemoveAt(0);            // Then remove it from drawPile
             return (cp);                      // And return it
         }
@@ -94,7 +94,7 @@ namespace Poker
         /// Handler for any time a card in the game is clicked
         /// </summary>
         /// <param name='cp'>The CardProspector that was clicked</param>
-        static public void CARD_CLICKED(CardProspector cp)
+        static public void CARD_CLICKED(CardProspector1 cp)
         {
             // The reaction is determined by the state of the clicked card
             switch (cp.state)
@@ -144,10 +144,10 @@ namespace Poker
                 layoutAnchor = tGO.transform;             // Grab its Transform
             }
 
-            CardProspector cp;
+            CardProspector1 cp;
 
             // Generate the Dictionary to match mine layout ID to CardProspector
-            mineIdToCardDict = new Dictionary<int, CardProspector>();
+            mineIdToCardDict = new Dictionary<int, CardProspector1>();
 
             // Iterate through the JsonLayoutSlots pulled from the JSON_Layout
             foreach (Poker.JsonLayoutSlot slot in jsonLayout.slots)
@@ -185,7 +185,7 @@ namespace Poker
         /// Moves the current target card to the discardPile
         /// </summary>
         /// <param name='cp'>The CardProspector to be moved</param>
-        void MoveToDiscard(CardProspector cp)
+        void MoveToDiscard(CardProspector1 cp)
         {
             // Set the state of the card to discard
             cp.state = eCardState.discard;
@@ -209,7 +209,7 @@ namespace Poker
         /// Make cp the new target card
         /// </summary>
         /// <param name='cp'>The CardProspector to be moved</param>
-        void MoveToTarget(CardProspector cp)
+        void MoveToTarget(CardProspector1 cp)
         {
             // If there is currently a target card, move it to discardPile
             if (target != null) MoveToDiscard(target);
@@ -231,7 +231,7 @@ namespace Poker
         /// </summary>
         void UpdateDrawPile()
         {
-            CardProspector cp;
+            CardProspector1 cp;
             // Go through all the cards of the drawPile
             for (int i = 0; i < drawPile.Count; i++)
             {
@@ -259,8 +259,8 @@ namespace Poker
         /// </summary>
         public void SetMineFaceUps()
         {                                            // d
-            CardProspector coverCP;
-            foreach (CardProspector cp in mine)
+            CardProspector1 coverCP;
+            foreach (CardProspector1 cp in mine)
             {
                 bool faceUp = true; // Assume the card will be face-up
 
@@ -293,7 +293,7 @@ namespace Poker
             if (drawPile.Count > 0) return;
 
             // Check for remaining valid plays
-            foreach (CardProspector cp in mine)
+            foreach (CardProspector1 cp in mine)
             {
                 // If there is a valid play, the game’s not over
                 if (target.AdjacentTo(cp)) return;
