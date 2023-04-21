@@ -37,6 +37,7 @@ public class Prospector : MonoBehaviour
 
     void Start()
     {
+        string sceneName = SceneManager.GetActiveScene().name;
         // Set the private Singleton. We’ll use this later.
         if (S != null) Debug.LogError("Attempted to set S more than once!");  // b
         S = this;
@@ -93,6 +94,7 @@ public class Prospector : MonoBehaviour
     /// <param name='cp'>The CardProspector that was clicked</param>
     static public void CARD_CLICKED(CardProspector cp)
     {
+        string sceneName = SceneManager.GetActiveScene().name;
         // The reaction is determined by the state of the clicked card
         switch (cp.state)
         {
@@ -126,6 +128,7 @@ public class Prospector : MonoBehaviour
                 break;
         }
         S.CheckForGameOver(); // This is now the last line of CARD_CLICKED()  // c
+        if (sceneName == "GameScene") return;
     }
 
     /// <summary>
@@ -133,6 +136,7 @@ public class Prospector : MonoBehaviour
     /// </summary>
     void LayoutMine()
     {
+
         // Create an empty GameObject to serve as an anchor for the tableau   // a
         if (layoutAnchor == null)
         {
