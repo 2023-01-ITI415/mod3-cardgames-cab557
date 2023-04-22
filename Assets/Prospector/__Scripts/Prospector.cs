@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;   // We’ll need this line later in the chapter
+using UnityEngine.XR;
 
 [RequireComponent(typeof(Deck))]                                              // a
 [RequireComponent(typeof(JsonParseLayout))]
@@ -34,6 +35,8 @@ public class Prospector : MonoBehaviour
 
     public List<CardProspector> potentialSpecialCards;
     public float[] silverCardChances = { 1, 1, 0.5f, 0.25f, 0.125f };
+    public float[] goldCardChances = { 1, 1, 0.5f, 0.25f, 0.125f };
+    System.Random rand = new System.Random();
 
     void Start()
     {
@@ -346,12 +349,42 @@ public class Prospector : MonoBehaviour
             if (Random.value <= chance)
             {
                 Debug.Log("Making Silver for Game" + chance);
+                CardProspector tcp;
+                int loc = rand.Next(potentialSpecialCards.Count);
+                tcp = potentialSpecialCards[loc];
+                potentialSpecialCards.RemoveAt(loc);
+                tcp.cardType = eCardType.silver;
+                Debug.Log(tcp.name);
+                SpriteRenderer tsr = tcp.GetComponent<SpriteRenderer>();
+                tsr.sprite = CardSpritesSO.GET_SILVER_FRONT;
+                GameObject tgo = tcp.transform.Find("back").gameObject;
+                tsr = tgo.GetComponent<SpriteRenderer>();
+                tsr.sprite = CardSpritesSO.GET_SILVER_BACK;
             }
        }
     }
 
-
-
+    void ConvertToGold()
+    {
+        foreach (float chance in goldCardChances)
+        {
+            if (Random.value <= chance)
+            {
+                Debug.Log("Making Gold for Game" + chance);
+                CardProspector tcp;
+                int loc = rand.Next(potentialSpecialCards.Count);
+                tcp = potentialSpecialCards[loc];
+                potentialSpecialCards.RemoveAt(loc);
+                tcp.cardType = eCardType.gold;
+                Debug.Log(tcp.name);
+                SpriteRenderer tsr = tcp.GetComponent<SpriteRenderer>();
+                tsr.sprite = CardSpritesSO.GET_GOLD_FRONT;
+                GameObject tgo = tcp.transform.Find("back").gameObject;
+                tsr = tgo.GetComponent<SpriteRenderer>();
+                tsr.sprite = CardSpritesSO.GET_GOLD_BACK;
+            }
+        }
+    }
 
 
 }

@@ -14,6 +14,7 @@ public class CardSpritesSO : ScriptableObject
     public Sprite cardBackSilver;
     public Sprite cardFrontSilver;
 
+
     [Header("Suits")]
     public Sprite suitClub;
     public Sprite suitDiamond;
@@ -101,4 +102,5 @@ public class CardSpritesSO : ScriptableObject
        
         get { return S.cardFrontSilver; }
     }
+
 }
