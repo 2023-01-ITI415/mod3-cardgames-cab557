@@ -19,7 +19,7 @@
             "id": 1,
             "x": -1.5,
             "y": 5.575,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row0",
             "hiddenByString": "5,6"
         },
@@ -27,7 +27,7 @@
             "id": 2,
             "x": 1,
             "y": 5.575,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row0",
             "hiddenByString": "7,8"
         },
@@ -35,7 +35,7 @@
             "id": 3,
             "x": 3.5,
             "y": 5.575,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row0",
             "hiddenByString": "9,10"
         },
@@ -43,7 +43,7 @@
             "id": 4,
             "x": 6,
             "y": 5.575,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row0",
             "hiddenByString": "10,11"
         },
@@ -51,7 +51,7 @@
             "id": 5,
             "x": -4,
             "y": 2.9,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row1",
             "hiddenByString": "12,13"
         },
@@ -59,7 +59,7 @@
             "id": 6,
             "x": -1.5,
             "y": 2.9,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row0",
             "hiddenByString": "13,14"
         },
@@ -67,7 +67,7 @@
             "id": 7,
             "x": 1,
             "y": 2.9,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row0",
             "hiddenByString": "15,16"
         },
@@ -75,7 +75,7 @@
             "id": 8,
             "x": 3.5,
             "y": 2.9,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row0",
             "hiddenByString": "16,17"
         },
@@ -83,7 +83,7 @@
             "id": 9,
             "x": 6,
             "y": 2.9,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row0",
             "hiddenByString": "18,19"
         },
@@ -91,7 +91,7 @@
             "id": 10,
             "x": -4,
             "y": 0.225,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row2",
             "hiddenByString": "19,20"
         },
@@ -99,7 +99,7 @@
             "id": 11,
             "x": -1.5,
             "y": 0.225,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row2",
             "hiddenByString": "20,21"
         },
@@ -107,7 +107,7 @@
             "id": 12,
             "x": 1,
             "y": 0.225,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row2",
             "hiddenByString": "21,22"
         },
@@ -115,7 +115,7 @@
             "id": 13,
             "x": 3.5,
             "y": 0.225,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row2",
             "hiddenByString": "22,23"
         },
@@ -123,7 +123,7 @@
             "id": 14,
             "x": 6,
             "y": 0.225,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row2",
             "hiddenByString": "23,24"
         },
@@ -131,7 +131,7 @@
             "id": 15,
             "x": -4,
             "y": -2.45,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row2",
             "hiddenByString": "24,25"
         },
@@ -139,7 +139,7 @@
             "id": 16,
             "x": -1.5,
             "y": -2.45,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row2",
             "hiddenByString": "25,26"
         },
@@ -147,7 +147,7 @@
             "id": 17,
             "x": 1,
             "y": -2.45,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row2",
             "hiddenByString": "26,27"
         },
@@ -155,7 +155,7 @@
             "id": 18,
             "x": 3.5,
             "y": -2.45,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row3",
             "hiddenByString": ""
         },
@@ -163,7 +163,7 @@
             "id": 19,
             "x": 6,
             "y": -2.45,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row3",
             "hiddenByString": ""
         },
@@ -171,7 +171,7 @@
             "id": 20,
             "x": -4,
             "y": -5.125,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row3",
             "hiddenByString": ""
         },
@@ -179,7 +179,7 @@
             "id": 21,
             "x": -1.5,
             "y": -5.125,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row3",
             "hiddenByString": ""
         },
@@ -187,7 +187,7 @@
             "id": 22,
             "x": 1,
             "y": -5.125,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row3",
             "hiddenByString": ""
         },
@@ -195,7 +195,7 @@
             "id": 23,
             "x": 3.5,
             "y": -5.125,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row3",
             "hiddenByString": ""
         },
@@ -203,7 +203,7 @@
             "id": 24,
             "x": 6,
             "y": -5.125,
-            "faceUp": true,
+            "faceUp": false,
             "layer": "Row3",
             "hiddenByString": ""
         }

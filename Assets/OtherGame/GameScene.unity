@@ -253,7 +253,7 @@ Camera:
   far clip plane: 100
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 12
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -363,7 +363,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardSprites: {fileID: 11400000, guid: 32e8e6acc4cbe9241a4909524cd12494, type: 2}
-  prefabCard1: {fileID: 1874845187188271477, guid: 8a305dee4bcc84940ae3f14d74cbfdc6,
+  prefabCard: {fileID: 1874845187188271477, guid: b77cf0bb0726cf84b9f1fdd328ea9292,
     type: 3}
   prefabSprite: {fileID: 1000014090761352, guid: 30a6ba41f0d264815a76b64a60ee0b62,
     type: 3}

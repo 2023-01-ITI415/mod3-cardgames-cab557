@@ -111,9 +111,10 @@ namespace Poker
                 // And remove that card from the original List
                 refCards.RemoveAt(ndx);
             }
+           
             // Replace the original List with the temporary List
             refCards = tCards;                                                    // c
         }
-
+        
     }
 }

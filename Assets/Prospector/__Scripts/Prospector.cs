@@ -55,6 +55,7 @@ public class Prospector : MonoBehaviour
         drawPile = ConvertCardsToCardProspectors(deck.cards);
         LayoutMine();
         ConvertToSilver();
+        ConvertToGold();
         //   MakeGoldCards()
         // Set up the initial target card
         MoveToTarget(Draw());
@@ -353,13 +354,13 @@ public class Prospector : MonoBehaviour
                 int loc = rand.Next(potentialSpecialCards.Count);
                 tcp = potentialSpecialCards[loc];
                 potentialSpecialCards.RemoveAt(loc);
-                tcp.cardType = eCardType.silver;
+                tcp.cardtype = eCardType.silver;
                 Debug.Log(tcp.name);
                 SpriteRenderer tsr = tcp.GetComponent<SpriteRenderer>();
-                tsr.sprite = CardSpritesSO.GET_SILVER_FRONT;
+                tsr.sprite = CardSpritesSO.FRONTSILVER;
                 GameObject tgo = tcp.transform.Find("back").gameObject;
                 tsr = tgo.GetComponent<SpriteRenderer>();
-                tsr.sprite = CardSpritesSO.GET_SILVER_BACK;
+                tsr.sprite = CardSpritesSO.BACKSILVER;
             }
        }
     }
@@ -375,13 +376,14 @@ public class Prospector : MonoBehaviour
                 int loc = rand.Next(potentialSpecialCards.Count);
                 tcp = potentialSpecialCards[loc];
                 potentialSpecialCards.RemoveAt(loc);
-                tcp.cardType = eCardType.gold;
+                tcp.cardtype = eCardType.gold;
                 Debug.Log(tcp.name);
                 SpriteRenderer tsr = tcp.GetComponent<SpriteRenderer>();
-                tsr.sprite = CardSpritesSO.GET_GOLD_FRONT;
+                tsr.sprite = CardSpritesSO.FRONTGOLD;
                 GameObject tgo = tcp.transform.Find("back").gameObject;
                 tsr = tgo.GetComponent<SpriteRenderer>();
-                tsr.sprite = CardSpritesSO.GET_GOLD_BACK;
+                tsr.sprite = CardSpritesSO.BACKGOLD;
+                
             }
         }
     }

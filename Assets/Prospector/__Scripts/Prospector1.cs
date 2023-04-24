@@ -107,7 +107,7 @@ namespace Poker
                     // Call two methods on the Prospector Singleton S
                     S.MoveToTarget(S.Draw());  // Draw a new target card
                     S.UpdateDrawPile();          // Restack the drawPile
-                    ScoreManager.TALLY(eScoreEvent.draw);
+                    ScoreManager1.TALLY(eScoreEvent.draw);
                     break;
                 case eCardState.mine:
                     // Clicking a card in the mine will check if it’s a valid play
@@ -124,7 +124,7 @@ namespace Poker
                         S.mine.Remove(cp);   // Remove it from the tableau List
                         S.MoveToTarget(cp);  // Make it the target card
                         S.SetMineFaceUps();
-                        ScoreManager.TALLY(eScoreEvent.mine); // c
+                        ScoreManager1.TALLY(eScoreEvent.mine); // c
                     }
                     break;
             }
@@ -313,12 +313,12 @@ namespace Poker
             if (won)
             {
                 //Debug.Log("Game Over. You won! :)");
-                ScoreManager.TALLY(eScoreEvent.gameWin);
+                ScoreManager1.TALLY(eScoreEvent.gameWin);
             }
             else
             {
                 //Debug.Log("Game Over. You Lost. :");
-                ScoreManager.TALLY(eScoreEvent.gameLoss);
+                ScoreManager1.TALLY(eScoreEvent.gameLoss);
             }
 
             // Reset the CardSpritesSO singleton to null
@@ -329,15 +329,14 @@ namespace Poker
             Invoke("ReloadLevel", roundDelay);
             // SceneManager.LoadScene("__Prospector_Scene_0");
             UITextManager.GAME_OVER_UI(won);
+        }
             void ReloadLevel()
             {
                 // Reload the scene, resetting the game
                 SceneManager.LoadScene("__Prospector_Scene_0");
             }
 
-
-
-        }
+        
         void ConvertToSilver()
         {
             foreach (float chance in silverCardChances)
