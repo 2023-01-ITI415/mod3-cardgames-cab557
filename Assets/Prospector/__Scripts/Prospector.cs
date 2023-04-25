@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;   // We’ll need this line later in the chapter
+using UnityEngine.XR;
 
 [RequireComponent(typeof(Deck))]                                              // a
 [RequireComponent(typeof(JsonParseLayout))]
@@ -34,9 +35,12 @@ public class Prospector : MonoBehaviour
 
     public List<CardProspector> potentialSpecialCards;
     public float[] silverCardChances = { 1, 1, 0.5f, 0.25f, 0.125f };
+    public float[] goldCardChances = { 1, 1, 0.5f, 0.25f, 0.125f };
+    System.Random rand = new System.Random();
 
     void Start()
     {
+        string sceneName = SceneManager.GetActiveScene().name;
         // Set the private Singleton. We’ll use this later.
         if (S != null) Debug.LogError("Attempted to set S more than once!");  // b
         S = this;
@@ -51,6 +55,7 @@ public class Prospector : MonoBehaviour
         drawPile = ConvertCardsToCardProspectors(deck.cards);
         LayoutMine();
         ConvertToSilver();
+        ConvertToGold();
         //   MakeGoldCards()
         // Set up the initial target card
         MoveToTarget(Draw());
@@ -93,6 +98,7 @@ public class Prospector : MonoBehaviour
     /// <param name='cp'>The CardProspector that was clicked</param>
     static public void CARD_CLICKED(CardProspector cp)
     {
+        string sceneName = SceneManager.GetActiveScene().name;
         // The reaction is determined by the state of the clicked card
         switch (cp.state)
         {
@@ -126,6 +132,7 @@ public class Prospector : MonoBehaviour
                 break;
         }
         S.CheckForGameOver(); // This is now the last line of CARD_CLICKED()  // c
+        if (sceneName == "GameScene") return;
     }
 
     /// <summary>
@@ -133,6 +140,7 @@ public class Prospector : MonoBehaviour
     /// </summary>
     void LayoutMine()
     {
+
         // Create an empty GameObject to serve as an anchor for the tableau   // a
         if (layoutAnchor == null)
         {
@@ -342,12 +350,43 @@ public class Prospector : MonoBehaviour
             if (Random.value <= chance)
             {
                 Debug.Log("Making Silver for Game" + chance);
+                CardProspector tcp;
+                int loc = rand.Next(potentialSpecialCards.Count);
+                tcp = potentialSpecialCards[loc];
+                potentialSpecialCards.RemoveAt(loc);
+                tcp.cardtype = eCardType.silver;
+                Debug.Log(tcp.name);
+                SpriteRenderer tsr = tcp.GetComponent<SpriteRenderer>();
+                tsr.sprite = CardSpritesSO.FRONTSILVER;
+                GameObject tgo = tcp.transform.Find("back").gameObject;
+                tsr = tgo.GetComponent<SpriteRenderer>();
+                tsr.sprite = CardSpritesSO.BACKSILVER;
             }
        }
     }
 
-
-
+    void ConvertToGold()
+    {
+        foreach (float chance in goldCardChances)
+        {
+            if (Random.value <= chance)
+            {
+                Debug.Log("Making Gold for Game" + chance);
+                CardProspector tcp;
+                int loc = rand.Next(potentialSpecialCards.Count);
+                tcp = potentialSpecialCards[loc];
+                potentialSpecialCards.RemoveAt(loc);
+                tcp.cardtype = eCardType.gold;
+                Debug.Log(tcp.name);
+                SpriteRenderer tsr = tcp.GetComponent<SpriteRenderer>();
+                tsr.sprite = CardSpritesSO.FRONTGOLD;
+                GameObject tgo = tcp.transform.Find("back").gameObject;
+                tsr = tgo.GetComponent<SpriteRenderer>();
+                tsr.sprite = CardSpritesSO.BACKGOLD;
+                
+            }
+        }
+    }
 
 
 }

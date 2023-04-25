@@ -201,11 +201,8 @@ GameObject:
   - component: {fileID: 827460514}
   - component: {fileID: 827460516}
   - component: {fileID: 827460517}
-  - component: {fileID: 827460519}
   - component: {fileID: 827460518}
   - component: {fileID: 827460522}
-  - component: {fileID: 827460521}
-  - component: {fileID: 827460520}
   m_Layer: 0
   m_Name: _MainCamera
   m_TagString: MainCamera
@@ -256,7 +253,7 @@ Camera:
   far clip plane: 100
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 12
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -366,14 +363,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardSprites: {fileID: 11400000, guid: 32e8e6acc4cbe9241a4909524cd12494, type: 2}
-  prefabCard: {fileID: 1874845187188271477, guid: 8a305dee4bcc84940ae3f14d74cbfdc6,
+  prefabCard: {fileID: 1874845187188271477, guid: b77cf0bb0726cf84b9f1fdd328ea9292,
     type: 3}
   prefabSprite: {fileID: 1000014090761352, guid: 30a6ba41f0d264815a76b64a60ee0b62,
     type: 3}
   startFaceUp: 1
   deckAnchor: {fileID: 0}
   cards: []
---- !u!114 &827460519
+--- !u!114 &827460522
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -382,23 +379,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 827460508}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b10a88d3977cc642bbd9cd1794834a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jsonDeckFile: {fileID: 4900000, guid: 0ac7394745f2a344283ba0cde819f20c, type: 3}
-  deck:
-    decorators: []
-    cards: []
---- !u!114 &827460520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 827460508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e84a95330b6fed4e975d952ea58dd00, type: 3}
+  m_Script: {fileID: 11500000, guid: 8770d2f3db43b7c478500da6688e954b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   roundDelay: 2
@@ -417,49 +398,3 @@ MonoBehaviour:
   - 0.5
   - 0.25
   - 0.125
---- !u!114 &827460521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 827460508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3a954d6f66a5f745b110d5798e69684, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jsonLayoutFile: {fileID: 4900000, guid: 36439976fa7d73f44b04cd2e4e290895, type: 3}
-  layout:
-    multiplier: {x: 0, y: 0}
-    slots: []
-    drawPile:
-      x: 0
-      y: 0
-      layer: 
-      xStagger: 0
-    discardPile:
-      x: 0
-      y: 0
-      layer: 
-      xStagger: 0
---- !u!114 &827460522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 827460508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf5db5f392291394e9ca5d19cc788961, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardSprites: {fileID: 11400000, guid: 03bb20904b3617146aae375f823d173e, type: 2}
-  prefabCard: {fileID: 1874845187188271477, guid: 8a305dee4bcc84940ae3f14d74cbfdc6,
-    type: 3}
-  prefabSprite: {fileID: 1000014090761352, guid: 30a6ba41f0d264815a76b64a60ee0b62,
-    type: 3}
-  startFaceUp: 1
-  deckAnchor: {fileID: 0}
-  cards: []

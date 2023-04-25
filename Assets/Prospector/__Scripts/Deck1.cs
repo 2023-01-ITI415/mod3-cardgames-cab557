@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Poker;
 namespace Poker
 {
     [RequireComponent(typeof(JsonParseDeck1))]                                  // a
@@ -15,7 +15,7 @@ namespace Poker
 
         [Header("Dynamic")]
         public Transform deckAnchor;
-        public List<Card> cards;
+        public List<Card1> cards;
 
         private JsonParseDeck1 jsonDeck;
 
@@ -56,8 +56,8 @@ namespace Poker
         /// </summary>
         void MakeCards()
         {
-            cards = new List<Card>();
-            Card c;
+            cards = new List<Card1>();
+            Card1 c;
 
             // Generate 13 cards for each suit
             string suits = "CDHS";
@@ -82,11 +82,11 @@ namespace Poker
         /// <param name='suit'>The suit of the card (e.g., ’C’)</param>
         /// <param name='rank'>The rank from 1 to 13</param>
         /// <returns></returns>
-        Card MakeCard(char suit, int rank)
+        Card1 MakeCard(char suit, int rank)
         {
             GameObject go = Instantiate<GameObject>(prefabCard, deckAnchor);   // f
 
-            Card card = go.GetComponent<Card>();
+            Card1 card = go.GetComponent<Card1>();
 
             card.Init(suit, rank, startFaceUp);                                // g
             return card;
@@ -95,10 +95,10 @@ namespace Poker
         /// Shuffle a List(Card) and return the result to the original list.      // b
         /// </summary>
         /// <param name='refCards'>As a ref, this alters on the original list</param>
-        static public void Shuffle(ref List<Card> refCards)
+        static public void Shuffle(ref List<Card1> refCards)
         {                     // a
                               // Create a temporary List to hold the new shuffle order
-            List<Card> tCards = new List<Card>();
+            List<Card1> tCards = new List<Card1>();
 
             int ndx; // This will hold the index of the card to be moved
                      // Repeat as long as there are cards in the original List
@@ -111,9 +111,10 @@ namespace Poker
                 // And remove that card from the original List
                 refCards.RemoveAt(ndx);
             }
+           
             // Replace the original List with the temporary List
             refCards = tCards;                                                    // c
         }
-
+        
     }
 }

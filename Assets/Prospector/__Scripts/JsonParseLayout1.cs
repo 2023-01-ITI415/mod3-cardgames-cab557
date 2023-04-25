@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Poker;
 
 namespace Poker
 {
@@ -26,8 +27,8 @@ namespace Poker
     {
         // a
         public int id;
-        public int x;
-        public int y;
+        public float x;
+        public float y;
         public bool faceUp;
         public string layer;
         public string hiddenByString;                                         // b
@@ -62,7 +63,7 @@ namespace Poker
     [System.Serializable]
     public class JsonLayoutPile
     {
-        public int x, y;
+        public float x, y;
         public string layer;
         public float xStagger; // xStagger fans cards to the side for the draw pile
     }
