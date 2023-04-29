@@ -23,7 +23,7 @@ namespace Poker
         public CardProspector1 target;
 
         private Transform layoutAnchor;
-
+        public CardProspector1[,] gameBoard = new CardProspector1[5, 5];
         private Deck1 deck;
         private JsonLayout jsonLayout;
 
@@ -104,10 +104,10 @@ namespace Poker
             switch (cp.state)
             {
                 case eCardState.target:
-                    // Clicking the target card does nothing
-                    S.Update();
-                    S.OnMouseDown();
-                    S.OnMouseUp();
+                  
+                  //  S.Update();
+                   // S.OnMouseDown();
+                 //   S.OnMouseUp();
                     
                     break;
                 case eCardState.drawpile:
@@ -137,6 +137,7 @@ namespace Poker
                     break;
             }
             S.CheckForGameOver(); // This is now the last line of CARD_CLICKED()  // c
+            S.MoveToSlot(cp);
         }
 
         /// <summary>
@@ -162,7 +163,7 @@ namespace Poker
             {
                 cp = Draw(); // Pull a card from the top (beginning) of the draw Pile
                 cp.faceUp = slot.faceUp;    // Set its faceUp to the value in SlotDef
-                                            // Make the CardProspector a child of layoutAnchor
+                               // Make the CardProspector a child of layoutAnchor
                 cp.transform.SetParent(layoutAnchor);
 
                 // Convert the last char of the layer string to an int (e.g. 'Row 0')
@@ -193,6 +194,29 @@ namespace Poker
         /// Moves the current target card to the discardPile
         /// </summary>
         /// <param name='cp'>The CardProspector to be moved</param>
+        void MoveToSlot(CardProspector1 cp)
+        {
+            cp.state = eCardState.target;
+
+            if (target == null) return;
+            
+            target.SetLocalPos(new Vector3(
+                    jsonLayout.multiplier.x * jsonLayout.slots[CardProspector1.GET_SLOT(cp)].x,
+                    jsonLayout.multiplier.y * jsonLayout.slots[CardProspector1.GET_SLOT(cp)].y,
+                    0));
+
+            target.faceUp = true;
+
+
+            gameBoard[(int)Mathf.Floor(CardProspector1.GET_SLOT(cp) / 5), CardProspector1.GET_SLOT(cp) - (5 * ((int)Mathf.Floor(CardProspector1.GET_SLOT(cp) / 5)))] = target;
+
+            Debug.Log(gameBoard[(int)Mathf.Floor(CardProspector1.GET_SLOT(cp) / 5), CardProspector1.GET_SLOT(cp) - (5 * ((int)Mathf.Floor(CardProspector1.GET_SLOT(cp) / 5)))]);
+            target = null;
+            // Place it on top of the pile for depth sorting
+
+            cp.SetSpriteSortingLayer(jsonLayout.drawPile.layer + 1);
+
+        }
         void MoveToDiscard(CardProspector1 cp)
         {
             // Set the state of the card to discard
@@ -212,7 +236,7 @@ namespace Poker
             cp.SetSpriteSortingLayer(jsonLayout.discardPile.layer);               // a
             cp.SetSortingOrder(-200 + (discardPile.Count * 3));                  // b
         }
-
+       
         /// <summary>
         /// Make cp the new target card
         /// </summary>
@@ -365,18 +389,18 @@ namespace Poker
             }
         }
 
-        void OnMouseDown()
-        {
+      //  void OnMouseDown()
+       // {
             // Create the drag object and set its position to match the card
-            dragObject = new GameObject();
-            dragObject.transform.position = transform.position;
+         //   dragObject = new GameObject();
+         //   dragObject.transform.position = transform.position;
 
             // Calculate the offset between the mouse position and the card position
-            dragOffset = (Vector2)transform.position - (Vector2)Input.mousePosition;
+          //  dragOffset = (Vector2)transform.position - (Vector2)Input.mousePosition;
 
             // Set dragging to true
-            isDragging = true;
-        }
+          //  isDragging = true;
+     //   }
 
         void OnMouseUp()
         {

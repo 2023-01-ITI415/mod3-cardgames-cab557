@@ -15,7 +15,8 @@ namespace Poker
 
         // Make CardProspector extend Card        // b
         [Header("Dynamic: CardProspector1")]
-        public eCardState state = eCardState.drawpile;                   // c
+        public eCardState state = eCardState.drawpile;   
+        // c
                                                                          // The hiddenBy list stores which other cards will keep this one face down
         public List<CardProspector1> hiddenBy = new List<CardProspector1>();
         // The layoutID matches this card to the tableau JSON if it’s a tableau card
@@ -34,5 +35,10 @@ namespace Poker
             // Call the CardClicked method on the Prospector Singleton
             Prospector1.CARD_CLICKED(this);                                        // b
         }
+        public static int GET_SLOT(CardProspector1 cp)
+        {
+            return cp.layoutID;
+        }
+
     }
 }
