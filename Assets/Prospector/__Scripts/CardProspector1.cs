@@ -4,12 +4,12 @@ using UnityEngine;
 using Poker;
 
 namespace Poker
-{
+{ 
 
     // This enum defines the variable type eCardState with four named values.      // a
     public enum eCardState { drawpile, mine, target, discard }
 
-
+    public enum winState {fl }
     public class CardProspector1 : Card1
     {
 
